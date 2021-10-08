@@ -1,0 +1,13 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.ipTracker{
+    height: 100vh;
+}
+.leaflet-container {
+    height:69vh;
+    width: 100%;
+    z-index: -1;
+}
+
