@@ -1,14 +1,15 @@
+/* remove the initial css */
 *{
     padding: 0;
     margin: 0;
 }
-.ipTracker{
-    height: 100vh;
-}
+
+/* map style */
+
 .leaflet-container {
     height:69vh;
     width: 100%;
-    z-index: -1;
+    z-index: 0;
 }
 
 .leaflet-div-icon {
@@ -18,4 +19,31 @@
 
 #map{
     width: 100vw;
+}
+
+/* Skeleton animation  */
+
+.first-skeleton-loading{
+    min-width: 150px;
+    height: 15px;
+    margin-top: 10px;
+    border-radius: 10px;
+    animation: skeleton-loading-animation infinite alternate-reverse 1s;
+}
+
+.second-skeleton-loading{
+    width: 100px;
+    height: 15px;
+    margin-top: 10px;
+    border-radius: 10px;
+    animation: skeleton-loading-animation infinite alternate-reverse 1s;
+}
+
+@keyframes skeleton-loading-animation {
+    0%{
+        background-color: var(--dark-gray-skeleton-animation);
+    }
+    100%{
+        background-color: var(--light-gray-skeleton-animation);
+    }
 }

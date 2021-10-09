@@ -1,42 +1,41 @@
-import {TileLayer, MapContainer as LeafletMap, useMap} from "react-leaflet";
-import {Marker, Popup} from "react-leaflet";
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import {useEffect, useState} from "react";
 import {Icon} from "leaflet";
 import icon from '../assets/images/icon-location.svg'
 
 const MapComponent = ({data}) => {
 
+    // State of the coordinate
     const [coordinate, setCoordinate] = useState({lng: -118.09462, lat: 34.04915});
 
+    //When the component is created
     useEffect(() => {
         if (data) setCoordinate(() => ({lng: data.lng, lat: data.lat}));
     }, [data]);
 
+    //Map icon
     const locationIcon = new Icon({
         iconUrl: icon,
         iconSize: [30, 40],
     });
 
-    const ChangeMap = ({center, zoom}) => {
-        const map = useMap();
-        map.setView(center, zoom);
-        return null;
-    }
-
+    // Return the mapView
     return (
         <div id={"map"}>
-            <LeafletMap center={[coordinate.lat, coordinate.lng]} zoom={13} scrollWheelZoom={true}>
-                <ChangeMap center={[coordinate.lat,coordinate.lng]} zoom={13}> </ChangeMap>
+            <Map center={[coordinate.lat, coordinate.lng]} zoom={13} scrollWheelZoom={false}>
+                {/*<ChangeMap center={[coordinate.lat,coordinate.lng]} zoom={20}> </ChangeMap>*/}
                 <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 />
                 <Marker position={[coordinate.lat, coordinate.lng]} icon={locationIcon}>
                     <Popup>
-                        A pretty CSS3 popup. <br/> Easily customizable.
+                        {data.city}; {data.country}
+                        <p>lat : {data.lat}</p>
+                        <p>lng: {data.lng}</p>
                     </Popup>
                 </Marker>
-            </LeafletMap>
+            </Map>
         </div>
     )
 
