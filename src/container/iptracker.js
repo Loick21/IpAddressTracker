@@ -1,17 +1,13 @@
 import "../assets/css/ipTracker.css";
 import IconArrow from "../assets/images/icon-arrow.svg";
-import Map from "../components/map";
 
 import {useState, useEffect} from "react";
 
-import {axiosInstance} from "../helpers/axiosInstance";
 
-import axios from "axios";
-
-const Iptracker = () => {
+const Iptracker = ({data,setIp}) => {
 
     const [location,setLocation] = useState({
-        ip:"192.212.174.101",
+        ip:null,
         city:null,
         country:null,
         timezone:null,
@@ -20,36 +16,14 @@ const Iptracker = () => {
         lng:10
     });
 
-    useEffect(()=>{
-
-        fetchIpAddress();
-        console.log(location);
-
-    },[]);
-
     const [error, setError] = useState(null);
 
+    useEffect(()=>{
+        setLocation({...data});
+    },[data]);
+
+
     const onChange = (event) => setLocation({...location,[event.target.name]:event.target.value})
-
-    const fetchIpAddress = async ()=> {
-
-        const url = `https://geo.ipify.org/api/v2/country,city?apiKey=${process.env['REACT_APP_API_KEY']}&ipAddress=${location.ip}`;
-
-        try{
-            const response = await axios.get(url);
-            setLocation({
-                ip:response.data.ip,
-                city:response.data.location.city,
-                country:response.data.location.country,
-                timezone:response.data.location.timezone,
-                ISP:response.data.isp,
-                lat:response.data.location.lat,
-                lng:response.data.location.lng
-            });
-        }
-        catch (error){
-        }
-    }
 
     const validateIp = () =>{
          const pattern =  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
@@ -64,9 +38,8 @@ const Iptracker = () => {
     const onSubmit = (event) => {
         event.preventDefault();
         if(validateIp()){
-            fetchIpAddress();
+            setIp(location.ip);
         }
-
     }
 
     return (
@@ -81,7 +54,7 @@ const Iptracker = () => {
                             null
                     }
                     <div className={"ipTracker-form-container"}>
-                        <input name={"ip"} type={"text"} onChange={(event)=>onChange(event)} className={"ipTracker-input"} placeholder={"192.212 174 101"} required/>
+                        <input name={"ip"} type={"text"} onChange={(event)=>onChange(event)} className={"ipTracker-input"} placeholder={location.ip} required/>
                         <button type={"submit"} className={"ipTracker-btn-submit"}><img src={IconArrow}/></button>
                     </div>
                 </form>
@@ -106,7 +79,6 @@ const Iptracker = () => {
                     </div>
                 </div>
             </div>
-            <Map nlat={location.lat} nlng={location.lng}/>
         </section>
     );
 }

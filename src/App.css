@@ -11,3 +11,11 @@
     z-index: -1;
 }
 
+.leaflet-div-icon {
+    background: transparent;
+    border: none;
+}
+
+#map{
+    width: 100vw;
+}
