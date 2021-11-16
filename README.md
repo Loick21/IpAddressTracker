@@ -7,11 +7,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Install dependencies
 
-### `npm install`
+### ```npm install```
 
 ## Start the server
 
-### `npm start`
+### ```commandline
+npm start
+```
 
 ## Online version
 
